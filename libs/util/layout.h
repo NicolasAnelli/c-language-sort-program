@@ -51,7 +51,7 @@ void line(char *content, char align) {
 			printf("%c", simbol);
 			break;
 		case 'R':
-			printf("=  ");
+			printf("%c  ", simbol);
 			writed += 3;
 			aux = (WIDTH - 3) - (size + 2);
 			for (i = 0; i < aux; i++) {

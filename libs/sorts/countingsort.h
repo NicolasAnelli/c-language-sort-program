@@ -7,6 +7,8 @@
 #ifndef COUNTINGSORT_H_
 #define COUNTINGSORT_H_
 
+void countingSort(long* V, long N);
+
 void countingSort(long* V, long N) {
   int i, j, k;
   int *baldes = malloc(sizeof(long) * N);

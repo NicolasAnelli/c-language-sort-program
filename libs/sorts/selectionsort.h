@@ -7,6 +7,8 @@
 #ifndef SELECTIONSORT_H_
 #define SELECTIONSORT_H_
 
+void selectionSort(long* V, long N);
+
 void selectionSort(long* V, long N) {
   long i, j, menor_i, troca;
   for (i=0; i<N-1; i++) {

@@ -7,6 +7,8 @@
 #ifndef BUBBLESORT_H_
 #define BUBBLESORT_H_
 
+void bubbleSort(long* V, long N);
+
 void bubbleSort(long* V, long N) {
   long i, continua, aux, fim = N;
   do {

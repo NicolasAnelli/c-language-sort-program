@@ -7,7 +7,10 @@
 #ifndef QUICKSORT_H_
 #define QUICKSORT_H_
 
-void quickSort(long *V, long inicio, long fim){
+void quickSort(long *V, long inicio, long fim);
+long particiona(long *V, long inicio, long fim);
+
+void quickSort(long *V, long inicio, long fim) {
   long pivo;
   if (fim > inicio) {
     pivo = particiona(V, inicio, fim);

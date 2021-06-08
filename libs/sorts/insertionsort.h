@@ -7,6 +7,8 @@
 #ifndef INSERTIONSORT_H_
 #define INSERTIONSORT_H_
 
+void insertionSort(long* V, long N);
+
 void insertionSort(long* V, long N) {
   long i, j, aux;
   for(i=1; i<N; i++) {

@@ -4,8 +4,13 @@
  *  Created on: Jun 8, 2021
  *      Author: nicolasanelli
  */
+#include <math.h>
+
 #ifndef MERGESORT_H_
 #define MERGESORT_H_
+
+void mergeSort(long *V, long inicio, long fim);
+void merge(long *V, long inicio, long meio, long fim);
 
 void mergeSort(long *V, long inicio, long fim) {
   long meio;
