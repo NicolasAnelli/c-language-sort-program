@@ -42,6 +42,7 @@ char _MAIN_VECTOR_TYPE = 'a';
 
 int main() {
 	_MAIN_VECTOR = regenerateVector();
+	clearScreen();
 	mainMenu();
 	clearScreen();
 	return EXIT_SUCCESS;
@@ -171,7 +172,7 @@ void printMainMenu() {
 	emptyLine();
 	line("6. Counting Sort", 'L');
 	emptyLine();
-	line("7. Bucket Sort (Indisponível)", 'L');
+	line("7. Bucket Sort (Indisponivel)", 'L');
 	emptyLine();
 	line("8. Configurar vetor", 'L');
 	emptyLine();
