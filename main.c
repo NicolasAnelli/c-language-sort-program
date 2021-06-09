@@ -15,8 +15,8 @@
 #include "libs/sorts/quicksort.h"
 #include "libs/sorts/selectionsort.h"
 
-#define SYSTEM_NAME "Projeto Final - Analise de Algoritmos"
-#define INITIAL_SIZE 25
+#define SYSTEM_NAME "Analise de Algoritmos"
+#define INITIAL_SIZE 20
 
 /** Screen header **/
 void header();
@@ -25,17 +25,23 @@ void header();
 void mainMenu();
 void printMainMenu();
 
-void printLoadingScreen();
+void loadingScreen();
 
 void resultScreen(char* subtitle, long* vector, long size, char* time);
 void printResultScreen(char* subtitle, long* vector, long size, char* time);
 
+void configScreen();
+void printConfigScreen();
+
+long* regenerateVector();
+
 /** Main program **/
 long* _MAIN_VECTOR;
-long _MAIN_VECTOR_SIZE;
+long _MAIN_VECTOR_SIZE = INITIAL_SIZE;
+char _MAIN_VECTOR_TYPE = 'a';
+
 int main() {
-	_MAIN_VECTOR = criaVetorAleatorio(INITIAL_SIZE);
-	_MAIN_VECTOR_SIZE = INITIAL_SIZE;
+	_MAIN_VECTOR = regenerateVector();
 	mainMenu();
 	clearScreen();
 	return EXIT_SUCCESS;
@@ -71,7 +77,7 @@ void mainMenu() {
 		switch(*opt) {
 			case '1':
 				// Selection sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				selectionSort(vector, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -80,7 +86,7 @@ void mainMenu() {
 
 			case '2':
 				// Bubble sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				bubbleSort(vector, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -89,7 +95,7 @@ void mainMenu() {
 
 			case '3':
 				// Insertion sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				insertionSort(vector, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -98,7 +104,7 @@ void mainMenu() {
 
 			case '4':
 				// Merge sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				mergeSort(vector, 0, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -107,7 +113,7 @@ void mainMenu() {
 
 			case '5':
 				// Quick sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				quickSort(vector, 0, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -116,7 +122,7 @@ void mainMenu() {
 
 			case '6':
 				// Counting sort
-				printLoadingScreen();
+				loadingScreen();
 				stopwatchStart();
 				countingSort(vector, _MAIN_VECTOR_SIZE);
 				stopwatchStop();
@@ -125,15 +131,12 @@ void mainMenu() {
 
 			case '7':
 				// Bucket sort
-				// Não foi implementado XD
+				setWarning("Não foi implementado XD");
 				break;
 
 			case '8':
 				// Configurar vetor
-				break;
-
-			case 'a':
-			  // Trigger auto test
+				configScreen();
 				break;
 
 			case 'd':
@@ -176,7 +179,8 @@ void printMainMenu() {
 	filledLine();
 }
 
-void printLoadingScreen() {
+void loadingScreen() {
+	clearScreen();
 	header();
 	emptyLine();
 	emptyLine();
@@ -254,4 +258,99 @@ void printResultScreen(char* subtitle, long* vector, long size, char* time) {
 	emptyLine();
 	line("0. Voltar", 'R');
 	filledLine();
+}
+
+void configScreen() {
+	long size;
+	char *opt = (char*)malloc(sizeof(char));
+
+	while (1) {
+		clearScreen();
+		printConfigScreen();
+		printf("Escolha sua opcao: ");
+		scanf(" %[^\n]", opt);
+
+		switch(*opt) {
+			case '1':
+				free(_MAIN_VECTOR);
+				_MAIN_VECTOR_TYPE = 'c';
+				_MAIN_VECTOR = regenerateVector();
+				setWarning("Vetor crescente gerado com sucesso");
+				break;
+
+			case '2':
+				free(_MAIN_VECTOR);
+				_MAIN_VECTOR_TYPE = 'd';
+				_MAIN_VECTOR = regenerateVector();
+				setWarning("Vetor decrescente gerado com sucesso");
+				break;
+				
+			case '3':
+				free(_MAIN_VECTOR);
+				_MAIN_VECTOR_TYPE = 'a';
+				_MAIN_VECTOR = regenerateVector();
+				setWarning("Vetor aleatorio gerado com sucesso");
+				break;
+
+			case '4':
+				clearScreen();
+				printConfigScreen();
+				printf("Digite o tamanho do novo vetor: ");
+				if (scanf(" %ld", &size)) {
+					free(_MAIN_VECTOR);
+					_MAIN_VECTOR_SIZE = size;
+					_MAIN_VECTOR = regenerateVector();
+					setWarning("Novo vetor gerado com sucesso");
+				}
+				break;
+
+			case 'd':
+			  // debug
+				clearScreen();
+				printf("__MAIN_VECTOR: \n");
+				imprimeVetor(_MAIN_VECTOR, _MAIN_VECTOR_SIZE);
+				printf("\n");
+				printf("Digite qualquer valor para retornar: ");
+				scanf(" %[^\n]", opt);
+				break;
+
+			case '0':
+				free(opt);
+				return;
+		}
+	}
+}
+void printConfigScreen() {
+	header();
+	line("Configuracoes do vetor", 'C');
+	emptyLine();
+	line("1. Utilizar vetor crescente", 'L');
+	emptyLine();
+	line("2. Utilizar vetor decrescente", 'L');
+	emptyLine();
+	line("3. Gerar vetor aleatorio", 'L');
+	emptyLine();
+	line("4. Alterar tamanho do vetor", 'L');
+	emptyLine();
+	emptyLine();
+	emptyLine();
+	emptyLine();
+	emptyLine();
+	emptyLine();
+	emptyLine();
+	line("0. Voltar", 'R');
+	filledLine();
+}
+
+long* regenerateVector() {
+	if (_MAIN_VECTOR_SIZE < 0) return _MAIN_VECTOR;
+
+	switch(_MAIN_VECTOR_TYPE) {
+		case 'a':
+			return criaVetorAleatorio(_MAIN_VECTOR_SIZE);
+		case 'c':
+			return criaVetorCrescente(_MAIN_VECTOR_SIZE);
+		case 'd':
+			return criaVetorDecrescente(_MAIN_VECTOR_SIZE);
+	}
 }
