@@ -10,17 +10,15 @@
 #ifndef WARNING_H_
 #define WARNING_H_
 
-char _warning[255];
+char _warning[78];
 void setWarning(char* msg) {
 	strcpy(_warning, msg);
 }
-void printWarning() {
-	if(strcmp(_warning, "")) {
-		line(_warning, 'C');
-		strcpy(_warning, "");
-	} else {
-		emptyLine();
-	}
+char* popWarning() {
+	char *aux = (char*)malloc(78*sizeof(char));
+  strcpy(aux, _warning);
+	strcpy(_warning, "");
+  return aux;
 }
 
 #endif /* WARNING_H_ */
