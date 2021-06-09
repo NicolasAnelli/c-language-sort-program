@@ -136,8 +136,8 @@ void mainMenu() {
 			  // Trigger auto test
 				break;
 
-			case 's':
-			  // See actual vector
+			case 'd':
+			  // debug global var
 				clearScreen();
 				printf("__MAIN_VECTOR: \n");
 				imprimeVetor(_MAIN_VECTOR, _MAIN_VECTOR_SIZE);
@@ -208,6 +208,18 @@ void resultScreen(char* subtitle, long* vector, long size, char* time) {
 		scanf(" %[^\n]", opt);
 
 		switch(*opt) {
+			case 'd':
+			  // debug
+				clearScreen();
+				printf("__MAIN_VECTOR: \n");
+				imprimeVetor(_MAIN_VECTOR, _MAIN_VECTOR_SIZE);
+				printf("\n");
+				printf("vector: \n");
+				imprimeVetor(vector, _MAIN_VECTOR_SIZE);
+				printf("\n");
+				printf("Digite qualquer valor para retornar: ");
+				scanf(" %[^\n]", opt);
+				break;
 			case '0':
 				free(opt);
 				return;
@@ -239,7 +251,7 @@ void printResultScreen(char* subtitle, long* vector, long size, char* time) {
 	emptyLine();
 	sprintf(aux, " > Elemento aleatorio [pos: %lu]: %lu", random, vector[random]);
 	line(aux, 'L');
-	line("0. Voltar", 'R');
 	emptyLine();
+	line("0. Voltar", 'R');
 	filledLine();
 }
