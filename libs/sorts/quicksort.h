@@ -8,18 +8,22 @@
 #define QUICKSORT_H_
 
 void quickSort(long *V, long inicio, long fim);
-long particiona(long *V, long inicio, long fim);
+long* particiona(long *V, long inicio, long fim);
 
 void quickSort(long *V, long inicio, long fim) {
-  long pivo;
+  long *pivo;
   if (fim > inicio) {
     pivo = particiona(V, inicio, fim);
-    quickSort(V, inicio, pivo-1);
-    quickSort(V, pivo+1, fim);
+    quickSort(V, inicio, *pivo-1);
+    quickSort(V, *pivo+1, fim);
   }
 }
-long particiona(long *V, long inicio, long fim) {
+long* particiona(long *V, long inicio, long fim) {
   long esq, dir, pivo, aux;
+  long *ret;
+
+  ret = malloc(sizeof(long));
+
   esq = inicio;
   dir = fim;
   pivo = V[inicio];
@@ -36,7 +40,8 @@ long particiona(long *V, long inicio, long fim) {
   }
   V[inicio] = V[dir];
   V[dir] = pivo;
-  return dir;
+  *ret = dir;
+  return ret;
 }
 
 #endif /* QUICKSORT_H_ */
